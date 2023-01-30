@@ -2,17 +2,15 @@ package main;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main
 {
     public static void main( String[] args ) {
 
-        List<Movie> movieList;
-        Genre Fantasy = new Genre("Fantasy");
-        Genre Anime = new Genre("Anime");
+        Map<Genre, List<Movie>> genreHashMap = new HashMap<>();
+        Genre Fantasy = new Genre("Fantasy", genreHashMap);
+        Genre Anime = new Genre("Anime", genreHashMap);
 
         Movie movie = Movie.builder()
                 .genre(Fantasy)
@@ -37,8 +35,8 @@ public class Main
         movie.viewMovieDetails();
         secondMovie.viewMovieDetails();
         System.out.println();
-        Fantasy.viewGenresList();
-        Anime.viewGenresList();
+        Fantasy.viewGenresList(genreHashMap);
+//        Anime.viewGenresList();
 //
 //        try(BufferedReader bufferdOutputStream = new BufferedReader(new FileReader(fis))){
 //            String line;
@@ -50,9 +48,12 @@ public class Main
 //            System.out.println("An error ocurred");
 //        }
 
-        /*TODO -> DE FACUT PROGRAMUL SA CITEASCA DIN FISIER, MOMENTAN POATE DOAR DIN CONSOLA
+        /*TODO -> DE FACUT PROGRAMUL SA CITEASCA DIN FISIER FILMELE, MOMENTAN POATE DOAR DIN CONSOLA
         *       -> CREAT CLASA FEED, DUPA CARE USER CARE MOSTENESTE FEED
+        *       ->DE CREEAT CUMVA MAPA CU TOATE FILMELE
         *       -> FEED ARE TOATE LISTELE CU GENURI, FILMELE FIIND AFISATE RANDOM
+        *       -> DE MODIFICAT PT CLASA GENRE, DIN LISTA IN MAPA
+        *       ->INHERITANCE CU MAPA INTRE GENRE SI MOVIE
         * */
 
     }
