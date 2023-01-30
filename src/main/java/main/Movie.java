@@ -1,18 +1,28 @@
 package main;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+import java.util.List;
 
-@Builder
-public class Movie extends Genre{
+public class Movie extends Genre {
+    private String title;
+    private Integer likes;
+    private String movieStudio;
+    private String genreTitle;
 
-    private String releaseDate;
-    protected Integer likes;
-    protected Genre genre;
-    public String title;
-    public String movieStudio;
+    @Builder
+    private Movie(String title, Genre genre, Integer likes, String movieStudio){
+        super(genre.genreTitle);
+        this.title = title;
+        this.likes = likes;
+        this.movieStudio = movieStudio;
+        genre.addMovie(this, true);
+    }
 
-void viewMovieDetails(){
-    System.out.println(title + " " + genreTitle + " " + likes + " " + movieStudio);
-}
+    void viewMovieDetails(){
+    System.out.println(this.title + " " + this.genreTitle + " " + this.likes + " " + this.movieStudio);
+    }
 
 }

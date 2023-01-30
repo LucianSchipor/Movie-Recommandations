@@ -1,30 +1,38 @@
 package main;
+import lombok.*;
 
-import com.sun.jdi.event.StepEvent;
-import lombok.Builder;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Builder
-public class Genre {
 
-    protected List<Movie> genreMoviesList;
+@AllArgsConstructor
+ public class Genre {
     protected String genreTitle;
+    List<Movie> genresList = new ArrayList<>();
 
-
-    public void addMovie(Movie newMovie, Boolean isAdmin){
-        genreMoviesList.add(newMovie);
+    public Genre(String genreTitle) {
+        //Contructor beacuse this isn't the builder class
+        this.genreTitle = genreTitle;
     }
 
-    public void addMovie(List<Movie>newMovies){
-        Stream<Movie> firstStream = genreMoviesList.stream();
+    public void addMovie(Movie newMovie, Boolean isAdmin){
+        //Add one movie
+        genresList.add(newMovie);
+    }
+    public void addMovie(List<Movie>newMovies, Boolean isAdmin){
+        //Add a list of movies if you want
+        Stream<Movie> firstStream = genresList.stream();
         Stream<Movie> secondStream = newMovies.stream();
 
         List<Movie> newList = Stream.concat(firstStream, secondStream).collect(Collectors.toList());
-        genreMoviesList = newList;
+        genresList = newList;
+    }
 
+    public void viewGenresList(){
+        //View all movies from a genre
+        genresList.forEach(Movie::viewMovieDetails);
     }
 
 }
