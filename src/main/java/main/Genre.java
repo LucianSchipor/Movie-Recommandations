@@ -17,11 +17,12 @@ import java.util.stream.Stream;
         this.genreTitle = genreTitle;
     }
 
-    public void addMovie(Movie newMovie, Boolean isAdmin){
+    public void addMovie(Movie newMovie, Boolean isAdmin) {
         //Add one movie
         genresList.add(newMovie);
     }
-    public void addMovie(List<Movie>newMovies, Boolean isAdmin){
+
+    public void addMovie(List<Movie> newMovies, Boolean isAdmin) {
         //Add a list of movies if you want
         Stream<Movie> firstStream = genresList.stream();
         Stream<Movie> secondStream = newMovies.stream();
@@ -30,9 +31,10 @@ import java.util.stream.Stream;
         genresList = newList;
     }
 
-    public void viewGenresList(){
+    public void viewGenresList() {
         //View all movies from a genre
+        System.out.println("All " + this.genreTitle + " movies: ");
+        System.out.println();
         genresList.forEach(Movie::viewMovieDetails);
     }
-
 }
