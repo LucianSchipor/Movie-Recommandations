@@ -9,19 +9,28 @@ import java.util.stream.Stream;
  public class Genre {
     protected String genreTitle;
 
-
+     Map<Genre, List<Movie>> genreHashMap;
     public Genre(String genreTitle, Map<Genre, List<Movie>> genreHashMap) {
         //Contructor beacuse this isn't the builder class
         this.genreTitle = genreTitle;
-        genreHashMap.computeIfAbsent(this, k -> new ArrayList<Movie>());
+        genreHashMap.put(this, new ArrayList<>());
+        this.genreHashMap = genreHashMap;
     }
 
     public void viewGenresList(Map<Genre, List<Movie>> genreHashMap) {
-        //View all movies from a genre
-        System.out.println("All " + this.genreTitle + " movies: ");
-        System.out.println();
-        for(Map.Entry<Genre, List<Movie>> entry : genreHashMap.entrySet()) {
-            entry.getValue().forEach(Movie::viewMovieDetails);
+
+
+            System.out.println(this.genreTitle + " movies are: ");
+            genreHashMap.get(this).forEach(Movie::viewMovieDetails);
+            System.out.println();
         }
-    }
-}
+
+     public String getGenreTitle() {
+         return genreTitle;
+     }
+
+     public Map<Genre, List<Movie>> getGenreHashMap() {
+         return this.genreHashMap;
+     }
+
+ }

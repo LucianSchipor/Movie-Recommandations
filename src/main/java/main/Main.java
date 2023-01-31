@@ -1,14 +1,12 @@
 package main;
 
-import javax.swing.*;
-import java.io.*;
 import java.util.*;
 
 public class Main
 {
     public static void main( String[] args ) {
 
-        Map<Genre, List<Movie>> genreHashMap = new HashMap<>();
+        Map<Genre, List<Movie>> genreHashMap = new HashMap<Genre, List<Movie>>();
         Genre Fantasy = new Genre("Fantasy", genreHashMap);
         Genre Anime = new Genre("Anime", genreHashMap);
 
@@ -17,7 +15,7 @@ public class Main
                 .title("Avengers")
                 .movieStudio("Marvel")
                 .likes(233)
-                .build();
+                .build();  //AICI APARE PROBLEMA, CAND PASEZ MAPA, E NULL
 
         Movie secondMovie = Movie.builder()
                 .title("Avatar")
@@ -32,21 +30,26 @@ public class Main
                 .likes(1032)
                 .build();
 
-        movie.viewMovieDetails();
-        secondMovie.viewMovieDetails();
-        System.out.println();
         Fantasy.viewGenresList(genreHashMap);
-//        Anime.viewGenresList();
-//
-//        try(BufferedReader bufferdOutputStream = new BufferedReader(new FileReader(fis))){
-//            String line;
-//            while((line = bufferdOutputStream.readLine()) != null){
-//                System.out.println(line);
-//            }
-//        }
-//        catch(IOException e){
-//            System.out.println("An error ocurred");
-//        }
+        Anime.viewGenresList(genreHashMap);
+
+        Movie forth = Movie.builder()
+                .title("Hulk")
+                .genre(Fantasy)
+                .movieStudio("Marvel Studio")
+                .likes(39039)
+
+                .build();
+
+        User a = User.builder()
+                .forname("Lucian")
+                .surname("Schipor")
+                .build();
+
+        a.addMovie(forth, genreHashMap);
+
+
+
 
         /*TODO -> DE FACUT PROGRAMUL SA CITEASCA DIN FISIER FILMELE, MOMENTAN POATE DOAR DIN CONSOLA
         *       -> CREAT CLASA FEED, DUPA CARE USER CARE MOSTENESTE FEED
