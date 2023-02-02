@@ -34,7 +34,7 @@ public class Movie extends Genre {
     private String genreTitle;
     private Genre genre;
 
-    @Builder
+
     private Movie(String title,Genre genre, Integer likes, String movieStudio){
         super(genre.genreTitle, genre.getGenreHashMap());
         this.genreTitle = genre.genreTitle;
@@ -42,7 +42,6 @@ public class Movie extends Genre {
         this.likes = likes;
         this.movieStudio = movieStudio;
         this.genre = genre;
-        genreHashMap.get(genre).add(this);
 
         //Pun in mapa o lista pe cheia x daca cheia nu exista.
         //Updatez lista daca lista exista
@@ -55,4 +54,9 @@ public class Movie extends Genre {
     public Genre getMovieGenre(){
         return this.genre;
     }
+
+    protected void increaseLikes(){
+        this.likes++;
+    }
+
 }

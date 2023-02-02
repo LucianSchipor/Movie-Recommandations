@@ -10,6 +10,7 @@ import java.util.stream.Stream;
     protected String genreTitle;
 
      Map<Genre, List<Movie>> genreHashMap;
+     @Builder
     public Genre(String genreTitle, Map<Genre, List<Movie>> genreHashMap) {
         //Contructor beacuse this isn't the builder class
         this.genreTitle = genreTitle;

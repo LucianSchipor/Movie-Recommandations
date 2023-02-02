@@ -1,12 +1,13 @@
 package main;
 
-import java.util.*;
 
-public class Main
-{
-    public static void main( String[] args ) {
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-        Map<Genre, List<Movie>> genreHashMap = new HashMap<Genre, List<Movie>>();
+public class Main {
+    public static void main(String[] args) {
+        Map<Genre, List<Movie>> genreHashMap = new HashMap<>();
         Genre Fantasy = new Genre("Fantasy", genreHashMap);
         Genre Anime = new Genre("Anime", genreHashMap);
 
@@ -15,7 +16,7 @@ public class Main
                 .title("Avengers")
                 .movieStudio("Marvel")
                 .likes(233)
-                .build();  //AICI APARE PROBLEMA, CAND PASEZ MAPA, E NULL
+                .build();  //IL PUNE CA CHEIE
 
         Movie secondMovie = Movie.builder()
                 .title("Avatar")
@@ -30,34 +31,38 @@ public class Main
                 .likes(1032)
                 .build();
 
-        Fantasy.viewGenresList(genreHashMap);
-        Anime.viewGenresList(genreHashMap);
-
         Movie forth = Movie.builder()
                 .title("Hulk")
                 .genre(Fantasy)
                 .movieStudio("Marvel Studio")
                 .likes(39039)
-
                 .build();
 
-        User a = User.builder()
+        Movie fifth = Movie.builder()
+                .title("Romina VTM")
+                .genre(Anime)
+                .movieStudio("Vidra Studios")
+                .likes(1032913)
+                .build();
+
+
+        User A = User.builder()
                 .forname("Lucian")
                 .surname("Schipor")
                 .build();
 
-        a.addMovie(forth, genreHashMap);
-
-
-
-
-        /*TODO -> DE FACUT PROGRAMUL SA CITEASCA DIN FISIER FILMELE, MOMENTAN POATE DOAR DIN CONSOLA
-        *       -> CREAT CLASA FEED, DUPA CARE USER CARE MOSTENESTE FEED
-        *       ->DE CREEAT CUMVA MAPA CU TOATE FILMELE
-        *       -> FEED ARE TOATE LISTELE CU GENURI, FILMELE FIIND AFISATE RANDOM
-        *       -> DE MODIFICAT PT CLASA GENRE, DIN LISTA IN MAPA
-        *       ->INHERITANCE CU MAPA INTRE GENRE SI MOVIE
-        * */
-
+       for(Map.Entry<Genre, List<Movie>> entry : genreHashMap.entrySet()){
+           entry.getKey().viewGenresList(genreHashMap);
+       }
     }
 }
+
+        /*TODO -> DE REZOLVAT MAPA, SE PUN 7 CHESTII
+           -> DE FACUT PROGRAMUL SA CITEASCA DIN FISIER FILMELE, MOMENTAN POATE DOAR DIN CONSOLA (cand apeleaza .build
+           se pune ca si genre)
+         *       -> CREAT CLASA FEED, DUPA CARE USER CARE MOSTENESTE FEED
+         *       -> MAKEADMIN -> DIN USER TREBUIE SA INSTANTIEZE UN ADMIN
+         *        -> FEED ARE TOATE LISTELE CU GENURI, FILMELE FIIND AFISATE RANDOM         *
+         *       -> Map<Genre, Pair<Priorities, List<Movies>>>
+         * * */
+
