@@ -1,14 +1,9 @@
 package main;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 
 public class Movie extends Genre {
     private String title;
@@ -17,7 +12,7 @@ public class Movie extends Genre {
         return title;
     }
 
-    public Integer getLikes() {
+    public String getLikes() {
         return likes;
     }
 
@@ -29,26 +24,34 @@ public class Movie extends Genre {
         return genreTitle;
     }
 
-    private Integer likes;
+    private String releaseDate;
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    private String likes;
     private String movieStudio;
     private String genreTitle;
     private Genre genre;
 
-
-    private Movie(String title,Genre genre, Integer likes, String movieStudio){
-        super(genre.genreTitle, genre.getGenreHashMap());
+    @Builder
+    public Movie(String title, Genre genre, String likes, String movieStudio, String releaseDate){
         this.genreTitle = genre.genreTitle;
         this.title = title;
         this.likes = likes;
         this.movieStudio = movieStudio;
         this.genre = genre;
-
-        //Pun in mapa o lista pe cheia x daca cheia nu exista.
-        //Updatez lista daca lista exista
+        this.releaseDate = releaseDate;
     }
 
     void viewMovieDetails(){
-    System.out.println("Title: " + this.title + " || from Studio: " + this.movieStudio + " || Genre: " + this.genreTitle + " || with: " + this.likes + " likes.");
+        System.out.println(this.title + " || "  + this.genreTitle + " || " + this.movieStudio + " || " + this.releaseDate + " || " + this.likes );
+    }
+
+    void outMovieDetails(ObjectOutputStream file){
+        PrintWriter out = new PrintWriter(file);
+        out.println(this.title + " || "  + this.genreTitle + " || " + this.movieStudio + " || " + this.releaseDate + " || " + this.likes );
     }
 
     public Genre getMovieGenre(){
@@ -56,7 +59,7 @@ public class Movie extends Genre {
     }
 
     protected void increaseLikes(){
-        this.likes++;
+        this.likes = String.valueOf(Integer.valueOf(this.likes)+1);
     }
 
 }

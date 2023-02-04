@@ -12,7 +12,6 @@ OPTION_1("OPTION 1: View your feed."),
         this.value = value;
     }
 
-
     public String getValue() {
         return value;
     }
