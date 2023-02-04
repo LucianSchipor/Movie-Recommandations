@@ -9,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 public class Movie extends Genre {
     private String title;
 
@@ -29,26 +28,33 @@ public class Movie extends Genre {
         return genreTitle;
     }
 
+    private String releaseDate;
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
     private Integer likes;
     private String movieStudio;
     private String genreTitle;
     private Genre genre;
 
+    @Builder
+    public Movie(String title, Genre genre, Integer likes, String movieStudio, String releaseDate){
+        this.genreHashMap = genre.getGenreHashMap();
 
-    private Movie(String title,Genre genre, Integer likes, String movieStudio){
-        super(genre.genreTitle, genre.getGenreHashMap());
         this.genreTitle = genre.genreTitle;
         this.title = title;
         this.likes = likes;
         this.movieStudio = movieStudio;
         this.genre = genre;
+        this.releaseDate = releaseDate;
 
-        //Pun in mapa o lista pe cheia x daca cheia nu exista.
-        //Updatez lista daca lista exista
+        genreHashMap.get(this.genre).add(this);
     }
 
     void viewMovieDetails(){
-    System.out.println("Title: " + this.title + " || from Studio: " + this.movieStudio + " || Genre: " + this.genreTitle + " || with: " + this.likes + " likes.");
+    System.out.println(this.title + " || "  + this.genreTitle + " || " + this.movieStudio + " || " + " || " + this.releaseDate + " || " + this.likes );
     }
 
     public Genre getMovieGenre(){
