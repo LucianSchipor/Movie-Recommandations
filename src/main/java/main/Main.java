@@ -1,10 +1,8 @@
 package main;
+
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
-import java.util.stream.Stream;
-
 
 public class Main {
 
@@ -17,9 +15,6 @@ public class Main {
     }
 
     public static  Map<Genre, List<Movie>> readTheFileAndStore(File file) {
-        /*TODO -> ar trebui sa-mi returneze o mapa de variabile.
-        *       -> ar trebui sa vad daca mapa e null, si daca nu e adaug pe cheia Genre filmul.
-        * */
         Map<Genre, List<Movie>> newMap = new HashMap<>();
         try {
             Files.lines(file.toPath())
@@ -35,6 +30,7 @@ public class Main {
                                 .genre(genreWithThisTitle(a.get(1), newMap))
                                 .movieStudio(a.get(2))
                                 .releaseDate(a.get(3))
+                                .likes(a.get(4))
                                 .build());
                     });
         }
@@ -49,35 +45,14 @@ public class Main {
 
         File moviesFile = new File("src/main/resources/Movies.txt");
         Map<Genre, List<Movie>> newMap = new HashMap<>();
-        File feedFile = new File("src/main/resources/Feed.txt");
-
         newMap = readTheFileAndStore(moviesFile);
 
-        Feed feed = new Feed(newMap);
-        feed.viewOriginalFeed();
-
-        User a = new User("Lucian", "Schipor");
-
-        Movie movie = Movie.builder()
-                .title("Avengers")
-                .genre(new Genre("Fantasy"))
-                .likes("102")
-                .build();
-
-        UserMenu menu = new UserMenu(newMap);
-        menu.viewMenu();
+        User a = new User("Lucian", "Schipor", newMap);
+        a.viewUserMenu();
     }
 }
 
-
-        /*TODO
-         * -> CITIRE:
-         *          -> De modificat constructorul genre.
-         * -> FEED:
-         *      -> DE GANDIT CUM SA SE FACA PRIORITATEA GENURILOR (FILMELE SUNT AFISATE IN ORDINE DE LIKES)
-         *      -> MAKEADMIN -> DIN USER TREBUIE SA INSTANTIEZE UN ADMIN
-         *      -> FEED ARE TOATE LISTELE CU GENURI, FILMELE FIIND AFISATE RANDOM
-         * -> USER:
-         *      -> CAND DAU LIKE LA UN FILM, ADAUG UNDEVA LA CE GEN DE FILM A DAT LIKE SI II CRESC PRIORITATEA
-         */
-
+/*
+*TODO:- modul in care este sortat feed-ul.
+*   -administrator
+* */
