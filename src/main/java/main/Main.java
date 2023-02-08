@@ -1,5 +1,4 @@
 package main;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
@@ -42,17 +41,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
         File moviesFile = new File("src/main/resources/Movies.txt");
         Map<Genre, List<Movie>> newMap = new HashMap<>();
         newMap = readTheFileAndStore(moviesFile);
-
+        
         User a = new User("Lucian", "Schipor", newMap);
         a.viewUserMenu();
     }
 }
-
-/*
-*TODO:- modul in care este sortat feed-ul.
-*   -administrator
-* */

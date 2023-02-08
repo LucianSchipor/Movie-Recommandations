@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class UserMenu {
-    List<optionsEnum> optionsList = List.of(optionsEnum.values());
+    List<OptionsEnum> optionsList = List.of(OptionsEnum.values());
     int choice;
     private Map<Genre, List<Movie>> moviesMap;
     User currentlyUser;
@@ -14,7 +14,7 @@ public class UserMenu {
         System.out.println();
         choice = -1;
         System.out.println("Your options are: ");
-        optionsList.forEach(optionsEnum -> System.out.println(optionsEnum.getValue()));
+        optionsList.forEach(OptionsEnum -> System.out.println(OptionsEnum.getValue()));
         System.out.println();
         this.moviesMap = moviesMap;
         this.currentlyUser = currentlyUser;
@@ -33,48 +33,52 @@ do{
             return;
         }
         case 1: {
-            System.out.println(optionsEnum.OPTION_1.getValue());
-            currentlyUser.viewUserFeed();
+            System.out.println(OptionsEnum.OPTION_1.getValue());
+            Feed userFeed = new Feed(currentlyUser);
+            userFeed.viewSpecificFeed();
             break;
         }
 
         case 2: {
-            System.out.println(optionsEnum.OPTION_2.getValue());
+            System.out.println(OptionsEnum.OPTION_2.getValue());
             System.out.println("Enter the movie name: ");
 
             Scanner stringScanner = new Scanner(System.in);
             String name = stringScanner.nextLine();
-            currentlyUser.searchMovie(name, currentlyUser.userMap).viewMovieDetails();
+            Movie movie = currentlyUser.searchMovie(name, currentlyUser.userMap);
+            if(movie == null)
+                System.out.println("The movie does not exist.");
+            else
+                currentlyUser.searchMovie(name, currentlyUser.userMap).viewMovieDetails();
             break;
         }
 
         case 3: {
-            System.out.println(optionsEnum.OPTION_3.getValue());
+            System.out.println(OptionsEnum.OPTION_3.getValue());
             Scanner movieScanner = new Scanner(System.in);
 
             System.out.println("Choose wich movie do you want to like: ");
             String movieName = movieScanner.nextLine();
             currentlyUser.likeMovie(movieName, currentlyUser.userMap);
-            System.out.println("You liked: " + movieName);
             break;
         }
 
         case 4: {
-            System.out.println(optionsEnum.OPTION_5.getValue());
+            System.out.println(OptionsEnum.OPTION_4.getValue());
             if (currentlyUser.isAdmin == false) {
                 System.out.println("ERROR: You are not an admin.");
-                System.out.println("Do you want to make" + currentlyUser + " an admin? (y/n): ");
+                System.out.println("Do you want to make " + currentlyUser.getSurname() + " " + currentlyUser.getForname() + " (" + currentlyUser + ") an admin? (y/n): ");
                 Scanner adminScanner = new Scanner(System.in);
                 String choice = adminScanner.nextLine();
 
                 if (choice.equals("y")) {
                     currentlyUser.isAdmin = true;
-                    System.out.println(currentlyUser + "is now admin.");
+                    System.out.println(currentlyUser + " is now admin.");
                 } else
                     return;
             }
                 currentlyUser.addMovies();
-
+                break;
                         //try {
 //                    PrintWriter out = new PrintWriter(new FileWriter("src/main/resources/Movies.txt"));
 //                    out.write("Sunt smecher" + 5);
@@ -85,10 +89,14 @@ do{
 //                }
         }
 
+        case 5: {
+          //File
+        }
+
         default: {
             System.out.println("ERROR: Option number " + choice + " dosen't exist.");
             System.out.println("Your options are: ");
-            optionsList.forEach(optionsEnum -> System.out.println(optionsEnum.getValue()));
+            optionsList.forEach(OptionsEnum -> System.out.println(OptionsEnum.getValue()));
         }
     }
     System.out.println();
